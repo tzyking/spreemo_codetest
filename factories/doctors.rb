@@ -8,5 +8,6 @@ FactoryGirl.define do
     city { Faker::Address.city }
     state { Faker::Address.state_abbr }
     zip { Faker::Address.zip }
+    specialty { ['Orthopedist', 'Opthamologist', 'Cardiologist'].sample }
   end
 end

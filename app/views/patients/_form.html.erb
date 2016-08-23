@@ -12,4 +12,11 @@
   <% end %>
 
   <%= render partial: "shared/person_form", locals: { form: f, person: @patient } %>
+  <div class="field">
+    <%= f.label :ailment %><br>
+    <%= f.select :ailment, options_for_select(ailment_options, @patient.ailment) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>
