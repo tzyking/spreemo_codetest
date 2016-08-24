@@ -1,5 +1,9 @@
 module DoctorsHelper
-  def doctor_specialty_options
+  def specialties
+    specialty_options.keys.freeze
+  end
+
+  def specialty_options
     {
       'Orthopedist' => 'Orthopedist',
       'Opthamologist' => 'Opthamologist',

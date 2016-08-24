@@ -4,7 +4,9 @@ describe DoctorsController do
 
   let(:valid_attributes) { attributes_for :doctor }
 
-  let(:invalid_attributes) { attributes_for :doctor, email: 'invalid_email' }
+  let(:invalid_email) { attributes_for :doctor, email: 'invalid_email' }
+
+  let(:invalid_specialty) { attributes_for :doctor, specialty: 'disease' }
 
   let(:valid_session) { {} }
 
@@ -59,14 +61,26 @@ describe DoctorsController do
       end
     end
 
-    context "with invalid params" do
+    context "with invalid emails" do
       it "assigns a newly created but unsaved doctor as @doctor" do
-        post :create, {:doctor => invalid_attributes}, valid_session
+        post :create, {:doctor => invalid_email}, valid_session
         expect(assigns(:doctor)).to be_a_new(Doctor)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:doctor => invalid_attributes}, valid_session
+        post :create, {:doctor => invalid_email}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    context "with invalid specialty" do
+      it "assigns a newly created but unsaved doctor as @doctor" do
+        post :create, {:doctor => invalid_specialty}, valid_session
+        expect(assigns(:doctor)).to be_a_new(Doctor)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, {:doctor => invalid_specialty}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -74,7 +88,7 @@ describe DoctorsController do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) { { first_name: 'John', last_name: 'Doe' } }
+      let(:new_attributes) { { first_name: 'John', last_name: 'Doe' , specialty: 'Cardiologist' } }
 
       it "updates the requested doctor" do
         doctor = Doctor.create! valid_attributes
@@ -82,6 +96,7 @@ describe DoctorsController do
         doctor.reload
         expect(doctor.first_name).to eq 'John'
         expect(doctor.last_name).to eq 'Doe'
+        expect(doctor.specialty).to eq 'Cardiologist'
       end
 
       it "assigns the requested doctor as @doctor" do
@@ -97,16 +112,30 @@ describe DoctorsController do
       end
     end
 
-    context "with invalid params" do
+    context "with invalid email" do
       it "assigns the doctor as @doctor" do
         doctor = Doctor.create! valid_attributes
-        put :update, {:id => doctor.to_param, :doctor => invalid_attributes}, valid_session
+        put :update, {:id => doctor.to_param, :doctor => invalid_email}, valid_session
         expect(assigns(:doctor)).to eq(doctor)
       end
 
       it "re-renders the 'edit' template" do
         doctor = Doctor.create! valid_attributes
-        put :update, {:id => doctor.to_param, :doctor => invalid_attributes}, valid_session
+        put :update, {:id => doctor.to_param, :doctor => invalid_email}, valid_session
+        expect(response).to render_template("edit")
+      end
+    end
+
+    context "with invalid specialty" do
+      it "assigns the doctor as @doctor" do
+        doctor = Doctor.create! valid_attributes
+        put :update, {:id => doctor.to_param, :doctor => invalid_specialty}, valid_session
+        expect(assigns(:doctor)).to eq(doctor)
+      end
+
+      it "re-renders the 'edit' template" do
+        doctor = Doctor.create! valid_attributes
+        put :update, {:id => doctor.to_param, :doctor => invalid_specialty}, valid_session
         expect(response).to render_template("edit")
       end
     end

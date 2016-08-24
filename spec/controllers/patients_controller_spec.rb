@@ -4,7 +4,9 @@ describe PatientsController do
 
   let(:valid_attributes) { attributes_for :patient }
 
-  let(:invalid_attributes) { attributes_for :patient, email: 'invalid_email' }
+  let(:invalid_email) { attributes_for :patient, email: 'invalid_email' }
+
+  let(:invalid_ailment) { attributes_for :patient, ailment: 'Headache' }
 
   let(:valid_session) { {} }
 
@@ -59,14 +61,26 @@ describe PatientsController do
       end
     end
 
-    context "with invalid params" do
+    context "with invalid email" do
       it "assigns a newly created but unsaved patient as @patient" do
-        post :create, {:patient => invalid_attributes}, valid_session
+        post :create, {:patient => invalid_email}, valid_session
         expect(assigns(:patient)).to be_a_new(Patient)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:patient => invalid_attributes}, valid_session
+        post :create, {:patient => invalid_email}, valid_session
+        expect(response).to render_template("new")
+      end
+    end
+
+    context "with invalid ailment" do
+      it "assigns a newly created but unsaved patient as @patient" do
+        post :create, {:patient => invalid_ailment}, valid_session
+        expect(assigns(:patient)).to be_a_new(Patient)
+      end
+
+      it "re-renders the 'new' template" do
+        post :create, {:patient => invalid_ailment}, valid_session
         expect(response).to render_template("new")
       end
     end
@@ -74,7 +88,7 @@ describe PatientsController do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) { { first_name: 'John', last_name: 'Doe' } }
+      let(:new_attributes) { { first_name: 'John', last_name: 'Doe', ailment: 'heart disease' } }
 
       it "updates the requested patient" do
         patient = Patient.create! valid_attributes
@@ -82,6 +96,7 @@ describe PatientsController do
         patient.reload
         expect(patient.first_name).to eq 'John'
         expect(patient.last_name).to eq 'Doe'
+        expect(patient.ailment).to eq 'heart disease'
       end
 
       it "assigns the requested patient as @patient" do
@@ -97,16 +112,30 @@ describe PatientsController do
       end
     end
 
-    context "with invalid params" do
+    context "with invalid email" do
       it "assigns the patient as @patient" do
         patient = Patient.create! valid_attributes
-        put :update, {:id => patient.to_param, :patient => invalid_attributes}, valid_session
+        put :update, {:id => patient.to_param, :patient => invalid_email}, valid_session
         expect(assigns(:patient)).to eq(patient)
       end
 
       it "re-renders the 'edit' template" do
         patient = Patient.create! valid_attributes
-        put :update, {:id => patient.to_param, :patient => invalid_attributes}, valid_session
+        put :update, {:id => patient.to_param, :patient => invalid_email}, valid_session
+        expect(response).to render_template("edit")
+      end
+    end
+
+    context "with invalid ailment" do
+      it "assigns the patient as @patient" do
+        patient = Patient.create! valid_attributes
+        put :update, {:id => patient.to_param, :patient => invalid_ailment}, valid_session
+        expect(assigns(:patient)).to eq(patient)
+      end
+
+      it "re-renders the 'edit' template" do
+        patient = Patient.create! valid_attributes
+        put :update, {:id => patient.to_param, :patient => invalid_ailment}, valid_session
         expect(response).to render_template("edit")
       end
     end
