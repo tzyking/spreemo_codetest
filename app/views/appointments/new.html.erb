@@ -1,0 +1,45 @@
+<h1>New Appointment</h1>
+
+<%= form_for(@appointment) do |f| %>
+  <% if @appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+      <% @appointment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <strong>Patient Name:</strong>
+    <%= @appointment.patient.name %>
+  </p>
+  <%= f.hidden_field :patient_id, value: @appointment.patient.id %>
+
+  <p>
+    <strong>Ailment:</strong>
+    <%= @appointment.patient.ailment %>
+  </p>
+
+  <div class="field">
+    <strong>Doctor:</strong>
+    <%= f.select :doctor_id, options_for_select(@doctor_options, @appointment.doctor_id) %>
+  </div>
+
+  <div class="field">
+    <strong>Appointment Date:</strong>
+    <%= f.date_select :appointment_date, default: 3.days.from_now, order: [:month, :day, :year], start_year: Date.today.year%>
+  </div>
+
+  <div class="field">
+    <strong>Appointment Time:</strong>
+    <%= f.time_select :appointment_date, {minute_step: 30, start_hour: 9, end_hour: 17, ignore_date: true} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
