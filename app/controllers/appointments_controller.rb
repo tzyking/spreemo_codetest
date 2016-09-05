@@ -18,6 +18,8 @@ class AppointmentsController < ApplicationController
 
     respond_to do |format|
       if @appointment.save
+        AppointmentMailer.appointment_scheduled_notification(@appointment).deliver
+
         format.html { render :show, notice: 'appointment was successfully created.' }
       else
         set_doctor_options(@appointment.patient.ailment)

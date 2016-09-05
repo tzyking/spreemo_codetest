@@ -12,4 +12,10 @@ class Appointment < ActiveRecord::Base
   end
 
   validates :appointment_date, presence: true, appointment_date: true
+
+  def formatted_appointment_date
+    if appointment_date
+      appointment_date.strftime("%m/%d/%Y %I:%M%p")
+    end
+  end
 end
