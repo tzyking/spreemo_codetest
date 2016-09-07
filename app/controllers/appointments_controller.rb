@@ -27,6 +27,7 @@ class AppointmentsController < ApplicationController
     end
   end
 
+  # loading available doctor list for patient
   def set_doctor_options(patient_ailment)
     @doctor_options = Hash.new
     specialty = ailment_specialty_pairs[patient_ailment]
