@@ -8,7 +8,7 @@ describe AppointmentsController do
     {
       patient_id: patient.id,
       doctor_id: doctor.id,
-      'appointment_date(1i)'=> '2016',
+      "appointment_date(1i)"=> "2016",
       "appointment_date(2i)"=>"9",
       "appointment_date(3i)"=>"11",
       "appointment_date(4i)"=>"09",
@@ -20,14 +20,14 @@ describe AppointmentsController do
     {
       patient_id: patient.id,
       doctor_id: doctor.id,
-      'appointment_date(1i)'=> '2016',
+      "appointment_date(1i)"=> "2016",
       "appointment_date(2i)"=>"8",
       "appointment_date(3i)"=>"11",
       "appointment_date(4i)"=>"09",
       "appointment_date(5i)"=>"00"
     }
   }
-  let(:valid_session)    { {} }
+  let(:valid_session)  { {} }
 
   before(:each) do
     create :doctor, first_name: 'Jim', last_name: 'Cool', specialty: 'Orthopedist'
