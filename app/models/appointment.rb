@@ -13,7 +13,7 @@ class Appointment < ActiveRecord::Base
       # Check if appointment date is already booked for patient.
       if Appointment.exists?(patient_id: record.patient_id, appointment_date: record.appointment_date)
         record.errors[attribute] <<
-          (options[:message] || "is occupied on patient's calendar")
+          (options[:message] || "is unavailable for the patient")
       end
 
       # Check if appointment date is already booked for doctor.
